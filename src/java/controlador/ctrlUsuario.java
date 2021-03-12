@@ -8,6 +8,8 @@ package controlador;
 import dao.UsuarioDao;
 import entidades.JSONResponse;
 import entidades.apiUsuario;
+import entidades.detalleArchivos;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +72,24 @@ public class ctrlUsuario {
         objUsuario.setUSUARIO(usuario);
 
         json = usuarioDao.update(objUsuario);
+        return json;
+    }
+    
+    public JSONResponse cargarInformacion(List<String> contenido) {
+        UsuarioDao usuarioDao = new UsuarioDao();
+        detalleArchivos detalles = new detalleArchivos();
+        int index = 0;
+        detalles.setId_tabla(contenido.get(index));
+        detalles.setPrimer_nombre(contenido.get(++index));
+        detalles.setSegundo_nombre(contenido.get(++index));
+        detalles.setPrmer_apellido(contenido.get(++index));
+        detalles.setSegundo_apellido(contenido.get(++index));
+        detalles.setEdad(contenido.get(++index));
+        detalles.setDireccion(contenido.get(++index));
+        detalles.setTelefono(contenido.get(++index));
+        detalles.setFecha_nacimiento(contenido.get(++index));
+        
+        json = usuarioDao.insertContenido(detalles);
         return json;
     }
 }

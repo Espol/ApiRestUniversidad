@@ -7,9 +7,12 @@ package dao;
 
 import entidades.JSONResponse;
 import entidades.apiUsuario;
+import entidades.detalleArchivos;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -240,6 +243,51 @@ public class UsuarioDao implements IDAO<apiUsuario> {
         return json;
     }
 
+    
+    public JSONResponse insertContenido(detalleArchivos obj) {
+        SQL = "INSERT INTO `apisociales`.`info_cargada` "
+                + "(`id_tabla`, `primer_nombre`, `segundo_nombre`, `prmer_apellido`, `segundo_apellido`, "
+                + "`edad`, `direccion`, `telefono`, `fecha_nacimiento`) "
+                + "VALUES (?,?,?,?,?,?,?,?,?)";
+
+        try {
+            int index = 0;
+            ps = cnx.getConexion().prepareStatement(SQL);
+            ps.setString(++index, obj.getId_tabla());
+            ps.setString(++index, obj.getPrimer_nombre());
+            ps.setString(++index, obj.getSegundo_nombre());
+            ps.setString(++index, obj.getPrmer_apellido());
+            ps.setString(++index, obj.getSegundo_apellido());
+            ps.setString(++index, obj.getEdad());
+            ps.setString(++index, obj.getDireccion());
+            ps.setString(++index, obj.getTelefono());
+            ps.setDate(++index, Date.valueOf(obj.getFecha_nacimiento()));
+
+            registros = ps.executeUpdate();
+            if (registros > 0) {
+                json.setCodRespuesta("000");
+                json.setMenRespuesta("PROCESO EXITOSO");
+            } else {
+                json.setCodRespuesta("099");
+                json.setMenRespuesta("ERROR DE EJECUCION DE SQL");
+            }
+
+        } catch (SQLException e) {
+            json.setCodRespuesta("009");
+            json.setMenRespuesta("Error al ejecutar el insert");
+            System.out.println("USUARIO_DAO - insert :Error al ejecutar el insert "+e);
+        } finally {
+            try {
+                ps.close();
+                cnx.cerrarConexion();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return json;
+    }
+    
     @Override
     public JSONResponse delete(int identificador) {
         return json;

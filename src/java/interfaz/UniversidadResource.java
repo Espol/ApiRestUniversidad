@@ -8,6 +8,8 @@ package interfaz;
 import com.google.gson.Gson;
 import controlador.ctrlUsuario;
 import entidades.JSONResponse;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -90,6 +92,41 @@ public class UniversidadResource {
         return gson.toJson(json);
     }
 
+    
+    @GET
+    @Path("/getCargarArchivo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCargarArchivo(@QueryParam("listContenido") List<String> contenido) {
+        opUsuario = new ctrlUsuario();
+        json = opUsuario.cargarInformacion(contenido);
+        return gson.toJson(json);
+    }
+    
+    /*METODO SE LO UTILIZA PARA MANDAR LA INFORMACION DE LOS ARCHIVOS CARGADOS*/
+    @GET
+    @Path("/getCargarArchivoParametros")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCargarArchivo(@QueryParam("id") String id, @QueryParam("primerNombre") String primerNombre,
+            @QueryParam("segundoNombre") String segundoNombre, @QueryParam("primerApellido") String primerApellido,
+            @QueryParam("segundoApellido") String segundoApellido, @QueryParam("edad") String edad, @QueryParam("direccion") String direccion,
+    @QueryParam("telefono") String telefono, @QueryParam("fecha_nacimiento") String fecha_nacimiento) {
+        List<String> contenido = new ArrayList<>();
+        
+        contenido.add(id);
+        contenido.add(primerNombre);
+        contenido.add(segundoNombre);
+        contenido.add(primerApellido);
+        contenido.add(segundoApellido);
+        contenido.add(edad);
+        contenido.add(direccion);
+        contenido.add(telefono);
+        contenido.add(fecha_nacimiento);
+        
+        opUsuario = new ctrlUsuario();
+        json = opUsuario.cargarInformacion(contenido);
+        return gson.toJson(json);
+    }
+    
     /**
      * Retrieves representation of an instance of interfaz.UniversidadResource
      *
