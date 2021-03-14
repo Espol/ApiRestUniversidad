@@ -16,7 +16,8 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "http://localhost:8080/ApiRestUniversidad/webresources/universidad/getUsuario?usuario="+usuario+"&contrasenia="+pass
+            url: "webresources/universidad/getUsuario?usuario="+usuario+"&contrasenia="+pass
+//            url: "http://localhost:8080/ApiRestUniversidad/webresources/universidad/getUsuario?usuario="+usuario+"&contrasenia="+pass
         }).done(function (data, textStatus, jqXHR) {
             console.log(data);
             if(data.codRespuesta == "000"){

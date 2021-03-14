@@ -34,7 +34,8 @@
         <p id="p_status"></p>
         <p id="p_end_cursor"></p>
         
-        <table id="tb_facebook_likes" class="display" width="100%"></table>
+        <button class="btn btn-primary btn-user btn-block" id="btn_instagram"><i class="fa fa-user"></i> Obtener Informacion de Instagram
+        </button>
         
     </body>
 </html>

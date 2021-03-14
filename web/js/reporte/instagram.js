@@ -6,32 +6,81 @@
 
 
 $(document).ready(function () {
+
+
+    $("#btn_instagram").click(function () {
+        instagramGetInformacion();
+    });
+
+});
+
+function saveInstagramInformacion(informacion) {
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+//            url: "webresources/redSocial/prueba?test=Marcelo"
+        url: "webresources/redSocial/create?redSocial=Instagram&informacion=" + informacion
+//            url: "http://localhost:8080/ApiRestUniversidad/webresources/universidad/getUsuario?usuario="+usuario+"&contrasenia="+pass
+    }).done(function (data, textStatus, jqXHR) {
+        if (data.codRespuesta === "000") {
+            swal("Good job!", data.menRespuesta, "success");
+        } else {
+            swal("Error de Server!", data.menRespuesta, "error");
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        swal("Error", textStatus + ' - ' + errorThrown, "error");
+    });
+}
+
+function instagramGetInformacion() {
+
     //https://rapidapi.com/yuananf/api/instagram28?endpoint=apiendpoint_98d05d19-e64a-411d-8ed5-413627593bb5
     //https://developers.facebook.com/docs/instagram-basic-display-api/getting-started
     //https://instafeedjs.com/#/
-    var  settings = {
-	"async": true,
-	"crossDomain": true,
-	"url": "https://instagram28.p.rapidapi.com/medias?user_id=25025320&next_cursor=QVFDQjY1YkdMY0x0YTFEdWo4R21CNFVuMUV0WmpIdUdlWVNTaXY4VXlVdkYyZEhJT2tBay1aRDN4OWpUMFZHbG1KNmpiMnQ2Z09FVjFhWHUxTDBfNDh5Yg%3D%3D&batch_size=20",
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": "02a4cb7162msh5b8cc620cd68be8p1a1779jsn647a1f835630",
-		"x-rapidapi-host": "instagram28.p.rapidapi.com"
-	}
-};
-
-$.ajax(settings).done(function (response) {
-    
-    var obj = JSON.parse(response);
-	console.log(obj.status);
-        $("#p_status").text(obj.status);
-        
-        if(obj.status === 'ok') {
-            debugger;
-            var user = obj.data;
-            console.log(user.user.edges);
-            $("#p_end_cursor").text(user.user.edge_owner_to_timeline_media.page_info.end_cursor);
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://instagram28.p.rapidapi.com/medias?user_id=25025320&next_cursor=QVFDQjY1YkdMY0x0YTFEdWo4R21CNFVuMUV0WmpIdUdlWVNTaXY4VXlVdkYyZEhJT2tBay1aRDN4OWpUMFZHbG1KNmpiMnQ2Z09FVjFhWHUxTDBfNDh5Yg%3D%3D&batch_size=20",
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": "02a4cb7162msh5b8cc620cd68be8p1a1779jsn647a1f835630",
+            "x-rapidapi-host": "instagram28.p.rapidapi.com"
         }
-});
+    };
 
-});
+    $.ajax(settings).done(function (response) {
+
+        var obj = JSON.parse(response);
+        $("#p_status").text(obj.status);
+
+        if (obj.status === 'ok') {
+//            var user = obj.data;
+//            var data = JSON.stringify(user.user.edge_owner_to_timeline_media.edges);
+            var informacion = JSON.stringify(obj.data.user.edge_owner_to_timeline_media.edges);
+            debugger;
+            console.log(informacion);
+            saveInstagramInformacion(informacion[0]);
+        }
+    });
+
+//    mostrarInformacion();
+
+}
+
+function mostrarInformacion() {
+
+    $.getJSON("webresources/redSocial/searchLast?redSocial=Instagram", function (data) {
+        console.log(data);
+//        var items = [];
+//        $.each(data, function (key, val) {
+//            items.push("<li id='" + key + "'>" + val + "</li>");
+//        });
+//
+//        $("<ul/>", {
+//            "class": "my-new-list",
+//            html: items.join("")
+//        }).appendTo("body");
+    });
+
+}

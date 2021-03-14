@@ -21,6 +21,7 @@ public class JSONResponse {
     private List<apiFacebook> listApiFacebook;
     private List<apiInstagram> listApiInstagram;
     private List<apiTwitter> listApiTwitter;
+    private Object data;
 
     public String getCodRespuesta() {
         return codRespuesta;
@@ -70,6 +71,14 @@ public class JSONResponse {
 
     public void setListApiTwitter(List<apiTwitter> listApiTwitter) {
         this.listApiTwitter = listApiTwitter;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
     
     

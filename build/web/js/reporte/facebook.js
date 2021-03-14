@@ -24,6 +24,8 @@ var getFacebookData = function () {
         console.log(response);
         $("#name").text(response.name);
         $("#id_name").text(response.id);
+        var informacion = JSON.stringify(response);
+        saveFacaBookInformacion( informacion );
     });
 };
 var facebookLogin = function () {
@@ -49,6 +51,8 @@ var getFacebookDataLike = function () {
             { title: "created_time", data: "created_time" }
         ]
     } );
+    var informacion = JSON.stringify(response);
+    saveFacaBookInformacion( informacion );
     });
 };
 
@@ -63,6 +67,26 @@ var fecaBookGetLike = function () {
         }
     });
 };
+
+function saveFacaBookInformacion( informacion ) {
+    
+    $.ajax({
+            type: "POST",
+            dataType: "json",
+//            url: "webresources/redSocial/prueba?test=Marcelo"
+            url: "webresources/redSocial/create?redSocial=facebook&informacion="+informacion
+//            url: "http://localhost:8080/ApiRestUniversidad/webresources/universidad/getUsuario?usuario="+usuario+"&contrasenia="+pass
+        }).done(function (data, textStatus, jqXHR) {
+            console.log(data);
+            if(data.codRespuesta === "000"){
+                swal("Good job!", data.menRespuesta, "success");
+            }else{
+                swal("Error de Server", data.menRespuesta, "error");
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            swal("Error", textStatus, "error");
+        });
+}
 
 $(document).ready(function () {
     FB.init({
