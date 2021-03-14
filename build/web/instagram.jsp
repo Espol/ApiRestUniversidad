@@ -27,6 +27,8 @@
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="css/rs/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <script src="vendor/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="vendor/json-viewer/jquery.json-viewer.js" type="text/javascript"></script>
+        <link href="css/json-viewer/jquery.json-viewer.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
     </head>
     <body>
@@ -36,6 +38,7 @@
         
         <button class="btn btn-primary btn-user btn-block" id="btn_instagram"><i class="fa fa-user"></i> Obtener Informacion de Instagram
         </button>
+        <pre id="json-renderer"></pre>
         
     </body>
 </html>

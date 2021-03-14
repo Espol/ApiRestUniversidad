@@ -35,9 +35,15 @@ function saveInstagramInformacion(informacion) {
 
 function instagramGetInformacion() {
 
+    // se tiene que registrar en esta paquina para poder hacer la consulta al api
+    // y teien que elegir el plan gratis. pero tiene un número limitado de consulta.
+    // y solo tiene que copiar la parte del settings para que funcione.
     //https://rapidapi.com/yuananf/api/instagram28?endpoint=apiendpoint_98d05d19-e64a-411d-8ed5-413627593bb5
-    //https://developers.facebook.com/docs/instagram-basic-display-api/getting-started
+    
+//https://developers.facebook.com/docs/instagram-basic-display-api/getting-started
     //https://instafeedjs.com/#/
+    //
+    
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -53,14 +59,14 @@ function instagramGetInformacion() {
 
         var obj = JSON.parse(response);
         $("#p_status").text(obj.status);
-
+        $('#json-renderer').jsonViewer(obj);
         if (obj.status === 'ok') {
 //            var user = obj.data;
 //            var data = JSON.stringify(user.user.edge_owner_to_timeline_media.edges);
-            var informacion = JSON.stringify(obj.data.user.edge_owner_to_timeline_media.edges);
-            debugger;
-            console.log(informacion);
-            saveInstagramInformacion(informacion[0]);
+//            var informacion = JSON.stringify(obj.data.user.edge_owner_to_timeline_media.edges);
+//            debugger;
+//            console.log(informacion);
+            saveInstagramInformacion(obj);
         }
     });
 
@@ -71,16 +77,19 @@ function instagramGetInformacion() {
 function mostrarInformacion() {
 
     $.getJSON("webresources/redSocial/searchLast?redSocial=Instagram", function (data) {
-        console.log(data);
+        
 //        var items = [];
-//        $.each(data, function (key, val) {
-//            items.push("<li id='" + key + "'>" + val + "</li>");
-//        });
-//
-//        $("<ul/>", {
-//            "class": "my-new-list",
-//            html: items.join("")
-//        }).appendTo("body");
+        var datos = JSON.stringify(data.data);
+        console.log(datos);
+        $('#json-renderer').jsonViewer(data.data);
+        /*$.each(datos, function (key, val) {
+            items.push("<li id='" + key + "'>" + val + "</li>");
+        });
+
+        $("<ul/>", {
+            "class": "my-new-list",
+            html: items.join("")
+        }).appendTo("body");*/
     });
 
 }
