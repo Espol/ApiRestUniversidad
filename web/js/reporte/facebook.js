@@ -90,7 +90,7 @@ function saveFacaBookInformacion( informacion ) {
 
 $(document).ready(function () {
     FB.init({
-        appId: '123104449738799',
+        appId: '{APP-ID}',
         xfbml: true,
         version: 'v10.0'
     });
